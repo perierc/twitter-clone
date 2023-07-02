@@ -23,7 +23,7 @@ const CreatePostWizard = () => {
       <Image
         src={user.profileImageUrl}
         alt="Profile image"
-        className="h-14 w-14 rounded-full"
+        className="rounded-full"
         width={56}
         height={56}
       />
@@ -43,7 +43,7 @@ const PostView = (props: PostWithUser) => {
       <Image
         src={author.profileImageUrl}
         alt={`${author.username}'s profile image`}
-        className="h-14 w-14 rounded-full"
+        className="rounded-full"
         width={56}
         height={56}
       />
@@ -98,10 +98,12 @@ const Home: NextPage = () => {
                   <SignOutButton />
                 </div>
                 <div>
-                  <img
+                  <Image
                     src={user.profileImageUrl}
                     alt="Profile image"
-                    className="h-14 w-14 rounded-full"
+                    className="rounded-full"
+                    width={56}
+                    height={56}
                   />
                 </div>
               </div>
