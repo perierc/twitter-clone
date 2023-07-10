@@ -66,7 +66,7 @@ export const postsRouter = createTRPCRouter({
           .min(1, { message: "Post must have at least 1 character" })
           .max(280, { message: "Post must have at most 280 characters" })
           .refine((value) => value.endsWith("🙂"), {
-            message: 'Post must end with the "🙂" emoji',
+            message: "Post must end with the 🙂 emoji",
           }),
       })
     )

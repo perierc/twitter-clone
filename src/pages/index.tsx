@@ -10,6 +10,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import Image from "next/image";
 import { LoadingPage, LoadingSpinner } from "~/components/Loading";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 
 dayjs.extend(relativeTime);
 
@@ -25,8 +26,16 @@ const CreatePostWizard = () => {
       onSuccess: async () => {
         await ctx.posts.getAll.invalidate();
         setInput("");
+        toast.success("Posted!");
+      },
+      onError: (err) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        const errors: { message: string }[] = JSON.parse(err.message);
+        errors.forEach((error) => toast.error(error.message));
       },
     });
+
+  const isPostButtonDisabled = isPosting || input === "";
 
   if (!user) return null;
 
@@ -45,12 +54,22 @@ const CreatePostWizard = () => {
         type="text"
         value={input}
         onChange={(e) => setInput(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && !isPostButtonDisabled) {
+            createPost({ content: input });
+          }
+        }}
         disabled={isPosting}
       />
       <button
-        className="align-center flex items-center rounded border px-6"
+        className={
+          "align-center flex items-center rounded border px-6 " +
+          (isPostButtonDisabled
+            ? "border-slate-600 text-slate-600"
+            : "bg-blue-700")
+        }
         onClick={() => createPost({ content: input })}
-        disabled={isPosting}
+        disabled={isPostButtonDisabled}
       >
         {isPosting && <LoadingSpinner size={16} />}
         <span className={isPosting ? "pl-3" : ""}>
