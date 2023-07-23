@@ -1,6 +1,5 @@
-import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import { type NextPage } from "next";
-import Head from "next/head";
 
 import { api } from "~/utils/api";
 import type { RouterOutputs } from "~/utils/api";
@@ -44,7 +43,7 @@ const CreatePostWizard = () => {
     <div className="flex gap-3 border-b border-slate-400 py-4 px-6">
       <Image
         src={user.profileImageUrl}
-        alt="Profile image"
+        alt={`${user.username ?? ""}'s profile image`}
         className="rounded-full"
         width={56}
         height={56}
@@ -94,18 +93,16 @@ const PostView = (props: PostWithUser) => {
         height={56}
       />
       <div className="flex flex-col overflow-hidden break-words">
-        <Link href={`/post/${post.id}`}>
-          <div className="flex gap-2">
-            <Link href={`/${author.username}`}>
-              <span className="font-bold">{author.username}</span>
-            </Link>
-            <span className="text-slate-400">·</span>
-            <span className="font-thin text-slate-400">
-              {dayjs(post.createdAt).fromNow()}
-            </span>
-          </div>
-          {post.content}
-        </Link>
+        <div className="flex gap-2">
+          <Link href={`/${author.username}`}>
+            <span className="font-bold">{author.username}</span>
+          </Link>
+          <span className="text-slate-400">·</span>
+          <span className="font-thin text-slate-400">
+            {dayjs(post.createdAt).fromNow()}
+          </span>
+        </div>
+        <Link href={`/post/${post.id}`}>{post.content}</Link>
       </div>
     </div>
   );
@@ -132,55 +129,15 @@ const Feed = () => {
 };
 
 const Home: NextPage = () => {
-  const { user, isSignedIn, isLoaded } = useUser();
+  const { isSignedIn } = useUser();
 
   // Start loading posts as soon as possible
   api.posts.getAll.useQuery();
 
-  if (!isLoaded) {
-    return <div />;
-  }
-
   return (
     <>
-      <Head>
-        <title>Simple Smiler</title>
-        <meta
-          name="description"
-          content="Post whatever you want, but end it with a simple smile! 🙂"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main className="flex min-h-screen justify-center">
-        <div className="w-full border-x border-slate-400 md:max-w-2xl">
-          <div className="flex items-center border-b-4 border-slate-400 p-4">
-            <div className="text-4xl">Simple Smiler 🙂</div>
-            {!isSignedIn ? (
-              <div className="ml-auto flex content-center rounded border bg-blue-600 py-2 px-4">
-                <SignInButton />
-              </div>
-            ) : (
-              <div className="ml-auto flex content-center">
-                <div className="mx-4 flex rounded border py-2 px-4">
-                  <SignOutButton />
-                </div>
-                <div>
-                  <Image
-                    src={user.profileImageUrl}
-                    alt="Profile image"
-                    className="rounded-full"
-                    width={56}
-                    height={56}
-                  />
-                </div>
-              </div>
-            )}
-          </div>
-          {isSignedIn && <CreatePostWizard />}
-
-          <Feed />
-        </div>
-      </main>
+      {isSignedIn && <CreatePostWizard />}
+      <Feed />
     </>
   );
 };

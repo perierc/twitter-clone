@@ -5,16 +5,9 @@ const SinglePostPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Simple Smiler</title>
-        <meta
-          name="description"
-          content="Post whatever you want, but end it with a simple smile! 🙂"
-        />
-        <link rel="icon" href="/favicon.ico" />
+        <title>Post</title>
       </Head>
-      <main className="flex min-h-screen justify-center">
-        <div>Post view</div>
-      </main>
+      <div>Post view</div>
     </>
   );
 };
