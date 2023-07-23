@@ -48,10 +48,9 @@ const CreatePostWizard = () => {
         width={56}
         height={56}
       />
-      <input
-        className="ml-4 flex-grow bg-transparent outline-none"
+      <textarea
+        className="ml-4 flex-grow resize-none bg-transparent outline-none"
         placeholder="Post whatever you want, but end it with a simple smile! 🙂"
-        type="text"
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={(e) => {
@@ -93,7 +92,7 @@ const PostView = (props: PostWithUser) => {
         width={56}
         height={56}
       />
-      <div className="flex flex-col">
+      <div className="flex flex-col overflow-hidden break-words">
         <div className="flex gap-2">
           <span className="font-bold">{author.username}</span>
           <span className="text-slate-400">·</span>
