@@ -11,6 +11,7 @@ import Image from "next/image";
 import { LoadingPage, LoadingSpinner } from "~/components/Loading";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
+import Link from "next/link";
 
 dayjs.extend(relativeTime);
 
@@ -93,14 +94,18 @@ const PostView = (props: PostWithUser) => {
         height={56}
       />
       <div className="flex flex-col overflow-hidden break-words">
-        <div className="flex gap-2">
-          <span className="font-bold">{author.username}</span>
-          <span className="text-slate-400">·</span>
-          <span className="font-thin text-slate-400">
-            {dayjs(post.createdAt).fromNow()}
-          </span>
-        </div>
-        {post.content}
+        <Link href={`/post/${post.id}`}>
+          <div className="flex gap-2">
+            <Link href={`/${author.username}`}>
+              <span className="font-bold">{author.username}</span>
+            </Link>
+            <span className="text-slate-400">·</span>
+            <span className="font-thin text-slate-400">
+              {dayjs(post.createdAt).fromNow()}
+            </span>
+          </div>
+          {post.content}
+        </Link>
       </div>
     </div>
   );
