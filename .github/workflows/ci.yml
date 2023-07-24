@@ -1,12 +1,9 @@
 name: CI
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+on: [push, pull_request]
+
+env:
+  DATABASE_URL: https://fakeurl.com
 
 jobs:
   build:
@@ -16,15 +13,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: "14.x" # You can change the Node.js version if needed
-
       - name: Install dependencies
         run: npm install
 
-      - name: TypeScript type checking
+      - name: TypeScript typechecking
         run: npm run typecheck
 
       - name: Run lint
