@@ -1,9 +1,9 @@
 import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
 import { LoadingPage } from "~/components/Loading";
 import { NotFoundPage } from "~/components/NotFound";
 import { PostView } from "~/components/PostView";
+import { ProfileImage } from "~/components/ProfileImage";
 import { generateSSGHelper } from "~/server/helpers/ssgHelper";
 import { api } from "~/utils/api";
 
@@ -39,12 +39,10 @@ const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
         <title>{data.username}</title>
       </Head>
       <div className="relative h-44 bg-slate-600">
-        <Image
-          src={data.profileImageUrl}
-          alt={`${data.username ?? ""}'s profile image`}
+        <ProfileImage
+          user={data}
           className="absolute bottom-0 left-0 -mb-16 ml-6 rounded-full border-4 border-black bg-black"
-          width={128}
-          height={128}
+          size={128}
         />
       </div>
       <div className="h-16" />

@@ -3,9 +3,9 @@ import { type NextPage } from "next";
 
 import { api } from "~/utils/api";
 
-import Image from "next/image";
 import { LoadingPage, LoadingSpinner } from "~/components/Loading";
 import { PostView } from "~/components/PostView";
+import { ProfileImage } from "~/components/ProfileImage";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 
@@ -36,13 +36,7 @@ const CreatePostWizard = () => {
 
   return (
     <div className="flex gap-3 border-b border-slate-400 py-4 px-6">
-      <Image
-        src={user.profileImageUrl}
-        alt={`${user.username ?? ""}'s profile image`}
-        className="rounded-full"
-        width={56}
-        height={56}
-      />
+      <ProfileImage user={user} />
       <textarea
         className="ml-4 flex-grow resize-none bg-transparent outline-none"
         placeholder="Post whatever you want, but end it with a simple smile! 🙂"

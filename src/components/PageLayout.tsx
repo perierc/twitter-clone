@@ -1,7 +1,7 @@
 import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
-import Image from "next/image";
 import Link from "next/link";
 import type { PropsWithChildren } from "react";
+import { ProfileImage } from "~/components/ProfileImage";
 
 export const PageLayout = ({ children }: PropsWithChildren) => {
   const { user, isSignedIn, isLoaded } = useUser();
@@ -27,13 +27,7 @@ export const PageLayout = ({ children }: PropsWithChildren) => {
                 <SignOutButton />
               </div>
               <div>
-                <Image
-                  src={user.profileImageUrl}
-                  alt="Profile image"
-                  className="rounded-full"
-                  width={56}
-                  height={56}
-                />
+                <ProfileImage user={user} />
               </div>
             </div>
           )}
